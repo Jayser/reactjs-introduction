@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "lint": "eslint ./src/**/*.js",
+    "lint": "eslint ./app/**/*.js",
     "watch": "webpack --colors --watch",
     "server": "better-npm-run server",
     "build:dist": "better-npm-run build:dist",
@@ -15,7 +15,11 @@
   },
   "betterScripts": {
     "server": {
-      "command": "node server.js"
+      "command": "node server.js",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": 8080
+      }
     },
     "build:dist": {
       "command": "webpack --display-modules"
@@ -59,22 +63,29 @@
     "babel-cli": "^6.14.0",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
+    "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-latest": "^6.14.0",
     "babel-preset-stage-0": "^6.5.0",
     "better-npm-run": "0.0.11",
     "clean-webpack-plugin": "^0.1.10",
+    "eslint": "^3.5.0",
+    "eslint-loader": "^1.5.0",
+    "eslint-plugin-react": "^6.2.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "force-case-sensitivity-webpack-plugin": "^0.1.1",
     "html-webpack-plugin": "^2.22.0",
     "open": "0.0.5",
     "pre-git": "^3.10.0",
+    "react-hot-loader": "^1.3.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.15.0"
   },
   "config": {
     "pre-git": {
       "msg-pattern": "^feature\\-\\d{1,4}\\:.+",
-      "pre-commit": []
+      "pre-commit": [
+        "npm run lint"
+      ]
     }
   }
 }

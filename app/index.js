@@ -1,4 +1,9 @@
-import React from "react";
-import { render } from "react-dom";
+import React from 'react';
+import {render} from 'react-dom';
 
-render((<div>123</div>), document.getElementById("app"));
+render(React.creat
+eElement('div', null, '111'), document.getElementById('app'));
+
+if (module.hot) {
+  module.hot.accept();
+}

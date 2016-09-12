@@ -11,41 +11,49 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 const IS_DEVELOP = NODE_ENV === 'development';
 const PORT = process.env.PORT || 8080;
 
-const WORK_DIRECTORY = path.join(__dirname, 'app');
-const OUTPUT_DIRECTORY = path.join(__dirname, 'build');
+const PATH = {
+    ENTRY: path.resolve(__dirname, 'app'),
+    OUTPUT: path.resolve(__dirname, 'build')
+};
 
 module.exports = {
     port: PORT,
-    context: WORK_DIRECTORY,
-    entry: {
-        main: [
-            'webpack-dev-server/client?http://localhost:' + PORT,
-            'webpack/hot/dev-server',
-            './index.js'
-        ]
-    },
+    context: PATH.ENTRY,
+    entry: [
+        'webpack-dev-server/client?http://localhost:' + PORT,
+        'webpack/hot/only-dev-server',
+        './index.js'
+    ],
     output: {
-        path: OUTPUT_DIRECTORY,
+        path: PATH.OUTPUT,
         publicPath: "http://localhost:" + PORT + '/',
         filename: 'js/[name].js?[hash]'
     },
-    devtool: "eval",
+    devtool: 'eval',
     resolve: {
         extensions: [ '', '.js' ]
     },
     module: {
+        preLoaders: [
+            {
+                test: /\.js$/,
+                loader: 'eslint',
+                include: [PATH.ENTRY]
+            }
+        ],
         loaders: [
             {
                 test: /\.js$/,
-                include: [WORK_DIRECTORY],
-                loader: 'babel'
+                include: [PATH.ENTRY],
+                loaders: ['react-hot', 'babel']
             }
         ]
     },
     plugins: [
         new ForceCaseSensitivityPlugin(),
+        new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new CleanWebpackPlugin([OUTPUT_DIRECTORY], { root: __dirname }),
+        new CleanWebpackPlugin([PATH.OUTPUT], { root: __dirname }),
         new HtmlWebpackPlugin({
             title: packageJSON.name,
             template: 'index.html'

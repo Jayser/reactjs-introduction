@@ -13,6 +13,7 @@ npm start
 * git config --global user.email "user_email"
 * git config --global color.ui true
 * git config --global pull.rebase true
+* git config core.ignorecase false
 
 ### Git hook
 > Automatically install pre-commit and commit-msg.
@@ -30,12 +31,14 @@ feature-36: your own commit message
 ### Style Guide
 
 * [Style Guide](https://github.com/airbnb/javascript/tree/master/react)
+* [Best Practice](https://github.com/planningcenter/react-patterns)
 
 ### Technologies & Tools
 
-* WebPack
+* webpack
 * ReactJS
-* es7
+* babel
+* es2017
 
 ### Authors
 
