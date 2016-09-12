@@ -18,6 +18,7 @@ npm start
 ### Git hook
 > Automatically install pre-commit and commit-msg.
 
+* pre-commit execute eslint
 * commit-msg validate message according to: 
 
 ```
