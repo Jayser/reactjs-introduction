@@ -1,0 +1,83 @@
+{
+  "name": "reactjs-synoptik",
+  "version": "1.0.0",
+  "description": "simple app",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "lint": "eslint ./src/**/*.js",
+    "watch": "webpack --colors --watch",
+    "server": "better-npm-run server",
+    "build:dist": "better-npm-run build:dist",
+    "build:prod": "better-npm-run build:prod",
+    "test": "better-npm-run test",
+    "test:watch": "better-npm-run test"
+  },
+  "betterScripts": {
+    "server": {
+      "command": "node server.js"
+    },
+    "build:dist": {
+      "command": "webpack --display-modules"
+    },
+    "build:prod": {
+      "command": "webpack --config --progress --colors",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 8080
+      }
+    },
+    "test": {
+      "command": "karma start --single-run --no-auto-watch karma.conf.js",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    "test:watch": {
+      "command": "karma start --auto-watch --no-single-run karma.conf.js",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jayser/reactjs-synoptik.git"
+  },
+  "author": "Sarhan Azizov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jayser/reactjs-synoptik/issues"
+  },
+  "homepage": "https://github.com/Jayser/reactjs-synoptik#readme",
+  "dependencies": {
+    "babel-preset-react": "^6.11.1",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-latest": "^6.14.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "better-npm-run": "0.0.11",
+    "clean-webpack-plugin": "^0.1.10",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "force-case-sensitivity-webpack-plugin": "^0.1.1",
+    "html-webpack-plugin": "^2.22.0",
+    "open": "0.0.5",
+    "pre-git": "^3.10.0",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.15.0"
+  },
+  "config": {
+    "pre-git": {
+      "msg-pattern": "^feature\\-\\d{1,4}\\:.+",
+      "pre-commit": [
+        "npm run lint",
+        "npm run test"
+      ]
+    }
+  }
+}
