@@ -34,6 +34,13 @@ feature-36: your own commit message
 * [Style Guide](https://github.com/airbnb/javascript/tree/master/react)
 * [Best Practice](https://github.com/planningcenter/react-patterns)
 
+### React Developer Tools
+
+React Developer Tools is a system that allows you to inspect a React Renderer, including the Component hierarchy, props, state, and more.
+
+* [installation](https://github.com/facebook/react-devtools)
+* [Chrome extension](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+
 ### Technologies & Tools
 
 * webpack
