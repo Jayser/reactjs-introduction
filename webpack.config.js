@@ -3,7 +3,6 @@ const Webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForceCaseSensitivityPlugin = require('force-case-sensitivity-webpack-plugin');
-const WebpackWriteFilePlugin = require('write-file-webpack-plugin');
 const WebpackMerge = require('webpack-merge');
 const WebpackValidator = require('webpack-validator');
 
@@ -24,7 +23,6 @@ const cfg = WebpackMerge({
     plugins: [
         new Webpack.NoErrorsPlugin(),
         new ForceCaseSensitivityPlugin(),
-        new WebpackWriteFilePlugin(),
         new Webpack.optimize.OccurenceOrderPlugin(),
         new CleanWebpackPlugin([cfgBase.path.output]),
         new Webpack.DefinePlugin({

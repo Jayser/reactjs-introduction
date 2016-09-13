@@ -12,6 +12,7 @@ new WebpackDevServer(webpack(cfg), {
     stats: { colors: true }
 }).listen(cfg.devServer.port, 'localhost', function (err) {
     if (err) { console.log(err); }
+    
     open("http://localhost:" + cfg.devServer.port + "/index.html");
     console.log('Listening at localhost:'  + cfg.devServer.port);
 });

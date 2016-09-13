@@ -1,8 +1,8 @@
+import './assets/scss/main.scss';
+
 import React from 'react';
 import {render} from 'react-dom';
 
-render(React.createElement('div', null, '123'), document.getElementById('app'));
+import Test from './components/test/index';
 
-if (module.hot) {
-  module.hot.accept();
-}
+render(<Test />, document.getElementById('app'));

@@ -8,7 +8,7 @@ const base = {
         root: path.resolve(__dirname, '../../'),
         source: path.resolve(__dirname, '../../app'),
         output: path.resolve(__dirname, '../../build'),
-        fonts: '/fonts'
+        fonts: './fonts'
     },
     isDevelop: NODE_ENV === 'development',
     isProd: NODE_ENV === 'production',

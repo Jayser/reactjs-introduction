@@ -1,4 +1,5 @@
 const Webpack = require('webpack');
+const WebpackWriteFilePlugin = require('write-file-webpack-plugin');
 const cfgBase = require('./base');
 
 module.exports = {
@@ -38,7 +39,7 @@ module.exports = {
     },
     devtool: 'source-map',
     plugins: [
-        new Webpack.optimize.OccurenceOrderPlugin(),
+        new WebpackWriteFilePlugin(),
         new Webpack.HotModuleReplacementPlugin()
     ]
 };
