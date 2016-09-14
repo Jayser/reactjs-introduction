@@ -1,11 +1,8 @@
 const Webpack = require('webpack');
-const WebpackWriteFilePlugin = require('write-file-webpack-plugin');
-const cfgBase = require('./base');
+const cfgBase = require('../base');
 
 module.exports = {
     entry: [
-        'webpack-dev-server/client?http://localhost:' + cfgBase.port,
-        'webpack/hot/only-dev-server',
         './index.js'
     ],
     module: {
@@ -20,7 +17,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 include: [cfgBase.path.source],
-                loaders: ['react-hot', 'babel']
+                loaders: ['react-hot', 'babel?extends=' + cfgBase.path.babel]
             },
             {
                 test: /\.scss/,
@@ -39,7 +36,11 @@ module.exports = {
     },
     devtool: 'source-map',
     plugins: [
-        new WebpackWriteFilePlugin(),
-        new Webpack.HotModuleReplacementPlugin()
+        new Webpack.optimize.DedupePlugin(),
+        new Webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        })
     ]
 };

@@ -6,9 +6,9 @@ const ForceCaseSensitivityPlugin = require('force-case-sensitivity-webpack-plugi
 const WebpackMerge = require('webpack-merge');
 const WebpackValidator = require('webpack-validator');
 
-const cfgBase = require('./config/webpack/base');
-const cfgDev = require('./config/webpack/dev');
-const cfgProd = require('./config/webpack/prod');
+const cfgBase = require('./configs/base');
+const cfgDev = require('./configs/webpack/dev');
+const cfgProd = require('./configs/webpack/prod');
 
 const cfg = WebpackMerge({
     context: cfgBase.path.source,
@@ -23,7 +23,6 @@ const cfg = WebpackMerge({
     plugins: [
         new Webpack.NoErrorsPlugin(),
         new ForceCaseSensitivityPlugin(),
-        new Webpack.optimize.OccurenceOrderPlugin(),
         new CleanWebpackPlugin([cfgBase.path.output]),
         new Webpack.DefinePlugin({
             IS_DEVELOPMENT: cfgBase.isDevelop,
@@ -37,8 +36,8 @@ const cfg = WebpackMerge({
         })
     ],
     eslint: {
-        configFile: 'config/eslint/.eslintrc',
-        ignoreFile: 'config/eslint/.eslintignore'
+        configFile: 'configs/eslint/.eslintrc',
+        ignoreFile: 'configs/eslint/.eslintignore'
     },
     devServer: {
         port: cfgBase.port

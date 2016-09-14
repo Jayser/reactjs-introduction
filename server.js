@@ -8,6 +8,7 @@ const cfg = require('./webpack.config');
 new WebpackDevServer(webpack(cfg), {
     publicPath: cfg.output.publicPath,
     historyApiFallback: true,
+    inline: true,
     hot: true,
     stats: { colors: true }
 }).listen(cfg.devServer.port, 'localhost', function (err) {
