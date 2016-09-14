@@ -1,8 +1,15 @@
-import './assets/scss/main.scss';
+import './assets/scss/index.scss';
 
 import React from 'react';
-import {render} from 'react-dom';
+import ReactDOM, {render} from 'react-dom';
 
-import Test from './components/test/index';
+import WeatherApp from 'weather-app/index';
 
-render(<Test />, document.getElementById('app'));
+console.log(React);
+console.log(ReactDOM);
+debugger;
+
+render(
+    <WeatherApp />,
+    document.getElementById('app')
+);

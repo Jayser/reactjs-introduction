@@ -17,6 +17,7 @@ const cfg = WebpackMerge({
         filename: 'js/[name].js?[hash]'
     },
     resolve: {
+        root: cfgBase.path.components,
         extensions: ['', '.js']
     },
     plugins: [
