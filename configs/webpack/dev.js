@@ -8,6 +8,9 @@ module.exports = {
         'webpack/hot/only-dev-server',
         './index.js'
     ],
+    output: {
+        publicPath: 'http://localhost:' + cfgBase.port + '/'
+    },
     module: {
         preLoaders: [
             {
@@ -25,21 +28,20 @@ module.exports = {
             {
                 test: /\.scss/,
                 include: [cfgBase.path.source],
-                loaders: ["style", "css?sourceMap", "sass?sourceMap"]
+                loaders: ['style', 'css?sourceMap', 'sass?sourceMap']
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url?limit=10000&mimetype=application/font-woff&name=" + cfgBase.path.fonts + "/[name].[ext]?[hash]"
+                loader: 'url?limit=10000&mimetype=application/font-woff&name=' + cfgBase.path.fonts + '/[name].[ext]?[hash]'
             },
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "file?name=" + cfgBase.path.fonts + "/[name].[ext]?[hash]"
+                loader: 'file?name=' + cfgBase.path.fonts + '/[name].[ext]?[hash]'
             }
         ]
     },
     devtool: 'eval-source-map',
     plugins: [
-        new WebpackWriteFilePlugin(),
         new Webpack.HotModuleReplacementPlugin()
     ]
 };

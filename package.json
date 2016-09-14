@@ -6,12 +6,11 @@
   "private": true,
   "scripts": {
     "lint": "eslint app --config=configs/eslint/.eslintrc",
-    "watch": "webpack --colors --watch",
-    "server": "better-npm-run server",
-    "build:dist": "better-npm-run build:dist",
+    "start": "better-npm-run server",
     "build:prod": "better-npm-run build:prod",
     "test": "better-npm-run test",
-    "test:watch": "better-npm-run test"
+    "test:watch": "better-npm-run test:watch",
+    "analyze": "better-npm-run analyze"
   },
   "betterScripts": {
     "server": {
@@ -21,11 +20,8 @@
         "PORT": 8080
       }
     },
-    "build:dist": {
-      "command": "webpack --display-modules"
-    },
     "build:prod": {
-      "command": "webpack --config --progress --colors",
+      "command": "webpack --config --colors",
       "env": {
         "NODE_ENV": "production",
         "PORT": 8080
@@ -41,6 +37,12 @@
       "command": "karma start --auto-watch --no-single-run karma.conf.js",
       "env": {
         "NODE_ENV": "test"
+      }
+    },
+    "analyze": {
+      "command": "mkdirp reports && webpack --json -profile > reports/webpack-stats.json",
+      "env": {
+        "NODE_ENV": "production"
       }
     }
   },

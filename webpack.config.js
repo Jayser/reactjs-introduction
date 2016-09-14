@@ -13,8 +13,7 @@ const cfgProd = require('./configs/webpack/prod');
 const cfg = WebpackMerge({
     context: cfgBase.path.source,
     output: {
-        path: cfgBase.path.output,
-        publicPath: "http://localhost:" + cfgBase.port + '/',
+        path: cfgBase.path.output,        
         filename: 'js/[name].js?[hash]'
     },
     resolve: {
