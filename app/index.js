@@ -1,13 +1,9 @@
 import './assets/scss/index.scss';
 
 import React from 'react';
-import ReactDOM, {render} from 'react-dom';
+import {render} from 'react-dom';
 
-import WeatherApp from 'weather-app/index';
-
-console.log(React);
-console.log(ReactDOM);
-debugger;
+import WeatherApp from 'WeatherApp/index';
 
 render(
     <WeatherApp />,

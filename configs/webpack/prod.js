@@ -32,6 +32,10 @@ module.exports = {
                 loader: 'url?limit=10000&mimetype=application/font-woff&name=' + cfgBase.path.fonts + '/[name].[ext]?[hash]'
             },
             {
+                test: /\.(jpe?g|png|gif|svg)$/,
+                loader: 'url?&limit=10000&name=' + cfgBase.path.img + '/[name].[ext]?[hash]'
+            },
+            {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: 'file?name=' + cfgBase.path.fonts + '/[name].[ext]?[hash]'
             }

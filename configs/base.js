@@ -11,6 +11,7 @@ const base = {
         reports: path.resolve(__dirname, '../reports'),
         babel: path.resolve(__dirname, '../configs/babel/.babelrc'),
         components: path.resolve(__dirname, '../app/components'),
+        img: './img',
         fonts: './fonts'
     },
     isDevelop: NODE_ENV === 'development',

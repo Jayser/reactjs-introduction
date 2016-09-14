@@ -31,7 +31,7 @@ const cfg = WebpackMerge({
         new HtmlWebpackPlugin({
             title: cfgBase.pkg.name,
             template: 'index.html',
-            favicon: 'favicon.ico',
+            favicon: 'assets/img/favicon.ico',
             hash: true
         })
     ],
