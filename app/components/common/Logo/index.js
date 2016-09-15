@@ -1,16 +1,19 @@
 import './index.scss';
 
-import React, {Component} from 'react';
+import React from 'react';
 
-class Logo extends Component {
-    render() {
-        const MODULE_ID = 'logo';
-        return (
-            <div className={`${MODULE_ID} font-poppins`} {...this.props}>
-                WEATHER
-            </div>
-        )
-    }
-}
+const Logo = (props) => (
+    <div className={`${props.className} font-poppins`} {...props}>
+        WEATHER
+    </div>
+);
+
+Logo.propTypes = {
+    className: React.PropTypes.string
+};
+
+Logo.defaultProps = {
+    className: 'logo'
+};
 
 export default Logo;
