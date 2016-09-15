@@ -10,7 +10,6 @@ const base = {
         output: path.resolve(__dirname, '../build'),
         reports: path.resolve(__dirname, '../reports'),
         babel: path.resolve(__dirname, '../configs/babel/.babelrc'),
-        components: path.resolve(__dirname, '../app/components'),
         img: './img',
         fonts: './fonts'
     },

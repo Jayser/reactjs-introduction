@@ -2,11 +2,11 @@ import './index.scss';
 
 import React from 'react';
 
-import Logo from 'common/Logo';
-import Input from 'form/Input';
-import Button from 'form/Button';
+import Logo from 'components/common/Logo';
+import Input from 'components/form/Input';
+import Button from 'components/form/Button';
 
-const WeaterApp = (props) => (
+const WeatherApp = (props) => (
     <div className={`${props.className}`}>
         <header className={`${props.className}__header`}>
             <div className={`${props.className}__logo`}>
@@ -33,12 +33,12 @@ const WeaterApp = (props) => (
     </div>
 );
 
-WeaterApp.propTypes = {
+WeatherApp.propTypes = {
     className: React.PropTypes.string
 };
 
-WeaterApp.defaultProps = {
+WeatherApp.defaultProps = {
     className: 'weather-app'
 };
 
-export default WeaterApp;
+export default WeatherApp;
