@@ -3,17 +3,22 @@ import React, {Component} from 'react';
 import WeatherAppView from 'components/WeatherApp';
 
 class WeatherApp extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            cities: [],
-            weatherList: []
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      list: []
+    };
+  }
 
-    render() {
-        return (<WeatherAppView {...this.props} state={this.state} />);
-    }
+  handlerLocation(locations) {
+    this.setState({
+      list: locations
+    });
+  }
+
+  render() {
+    return (<WeatherAppView {...this.props} handlerLocation={this.handlerLocation.bind(this)}/>);
+  }
 }
 
 export default WeatherApp;
