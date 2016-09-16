@@ -2,9 +2,9 @@ import './index.scss';
 
 import React from 'react';
 
-import Logo from 'components/common/Logo';
-import Input from 'components/form/Input';
-import Button from 'components/form/Button';
+import {Logo} from 'components/common';
+import {Button} from 'components/form';
+import SearchLocation from 'containers/SearchLocation';
 
 const WeatherApp = (props) => (
     <div className={`${props.className}`}>
@@ -13,7 +13,7 @@ const WeatherApp = (props) => (
                 <Logo />
             </div>
             <div className={`${props.className}__search`}>
-                <Input id="google-place-auto-complete" type="text" placeholder="Enter a location" />
+                <SearchLocation id="google-place-auto-complete" type="text" placeholder="Enter a location" />
             </div>
             <div className={`${props.className}__actions`}>
                 <div className={`${props.className}__actions-add`}>

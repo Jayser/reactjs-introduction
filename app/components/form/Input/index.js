@@ -11,7 +11,7 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
-    className: 'logo'
+    className: 'input'
 };
 
 export default Input;

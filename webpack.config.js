@@ -11,19 +11,19 @@ const cfgDev = require('./configs/webpack/dev');
 const cfgProd = require('./configs/webpack/prod');
 
 const cfg = WebpackMerge({
-    context: cfgBase.path.source,
+    context: cfgBase.paths.source,
     output: {
-        path: cfgBase.path.output,        
+        path: cfgBase.paths.output,        
         filename: 'js/[name].js?[hash]'
     },
     resolve: {
-        root: cfgBase.path.source,
+        root: cfgBase.paths.source,
         extensions: ['', '.js']
     },
     plugins: [
         new Webpack.NoErrorsPlugin(),
         new ForceCaseSensitivityPlugin(),
-        new CleanWebpackPlugin([cfgBase.path.output]),
+        new CleanWebpackPlugin([cfgBase.paths.output]),
         new Webpack.DefinePlugin({
             IS_DEVELOPMENT: cfgBase.isDevelop,
             IS_PROD: cfgBase.isProd

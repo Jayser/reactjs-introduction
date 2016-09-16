@@ -1,29 +1,19 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-import WeatherAppView from 'components/WeatherApp/index';
-import {log} from 'utils/common';
+import WeatherAppView from 'components/WeatherApp';
 
-const LifeCycleMixin2 = {
-    componentWillMount() {
-        log('LifeCycleMixin2 componentWillMount');
+class WeatherApp extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            cities: [],
+            weatherList: []
+        };
     }
-};
 
-const LifeCycleMixin = {
-  componentWillMount() {
-      log('LifeCycleMixin componentWillMount');
-  }
-};
-
-const WeatherApp = React.createClass({
-    mixins: [LifeCycleMixin, LifeCycleMixin2],
-    componentWillMount:  function() {
-      log('WeatherAppView componentWillMount');
-    },
-
-    render: function () {
-        return (<WeatherAppView />)
+    render() {
+        return (<WeatherAppView {...this.props} state={this.state} />);
     }
-});
+}
 
 export default WeatherApp;
