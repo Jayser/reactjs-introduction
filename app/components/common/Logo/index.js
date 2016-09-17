@@ -1,19 +1,21 @@
 import './index.scss';
 
-import React from 'react';
+import React, {PropTypes} from 'react';
+import classNames from 'classnames';
 
-const Logo = (props) => (
-    <div className={`${props.className} font-poppins`} {...props}>
-        WEATHER
-    </div>
+const Logo = ({className, children, ...props}) => (
+  <div className={classNames(className, 'font-poppins')} {...props}>
+    {children ? children : 'WEATHER'}
+  </div>
 );
 
 Logo.propTypes = {
-    className: React.PropTypes.string
+  children: PropTypes.element,
+  className: PropTypes.string
 };
 
 Logo.defaultProps = {
-    className: 'logo'
+  className: 'logo'
 };
 
 export default Logo;

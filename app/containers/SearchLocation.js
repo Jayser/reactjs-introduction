@@ -5,13 +5,19 @@ import geoLocationService from 'services/geoLocationService';
 import {delay} from 'utils/index';
 import {Input} from 'components/form';
 
-const DELAY_TO_EXECUTE = 300;
+const DELAY_TO_EXECUTE = 500;
 
 class SearchLocation extends Component {
   submitHandler({ target }) {
-    delay(() => geoLocationService(target.value, ({ data }) => {
-      this.props.handlerLocation(data.results);
-    }), DELAY_TO_EXECUTE);
+    let value = target.value;
+    delay(() => {
+      if (value) {
+        geoLocationService(value, ({ data }) => {
+          this.props.handlerSearchLocation(data.results);
+          target.value = '';
+        });
+      }
+    }, DELAY_TO_EXECUTE);
   }
 
   render() {
@@ -24,7 +30,7 @@ class SearchLocation extends Component {
 }
 
 SearchLocation.propTypes = {
-  handlerLocation: PropTypes.func.isRequired
+  handlerSearchLocation: PropTypes.func.isRequired
 };
 
 export default SearchLocation;
