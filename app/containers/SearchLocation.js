@@ -6,6 +6,7 @@ import {delay} from 'utils/index';
 import {Input} from 'components/form';
 
 const DELAY_TO_EXECUTE = 500;
+const LIST_TYPE = 'LCS';
 
 class SearchLocation extends Component {
   submitHandler({ target }) {
@@ -13,7 +14,7 @@ class SearchLocation extends Component {
     delay(() => {
       if (value) {
         geoLocationService(value, ({ data }) => {
-          this.props.handlerSearchLocation(data.results);
+          this.props.handlerSetState(LIST_TYPE, data.results);
           target.value = '';
         });
       }
@@ -30,7 +31,7 @@ class SearchLocation extends Component {
 }
 
 SearchLocation.propTypes = {
-  handlerSearchLocation: PropTypes.func.isRequired
+  handlerSetState: PropTypes.func.isRequired
 };
 
 export default SearchLocation;

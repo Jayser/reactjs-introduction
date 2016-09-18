@@ -6,16 +6,16 @@ class WeatherApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      type: '',
       list: []
     };
   }
 
-  handlerWeather(weather) {
-    console.log('add weather', weather);
-  }
-
-  handlerLocation(locations) {
-    this.setState({list: locations});
+  handlerSetState(type, list) {
+    this.setState({
+      type: type,
+      list: list
+    });
   }
 
   render() {
@@ -23,8 +23,7 @@ class WeatherApp extends Component {
       <WeatherAppView
         {...this.props}
         state={this.state}
-        handlerWeather={this.handlerWeather.bind(this)}
-        handlerSearchLocation={this.handlerLocation.bind(this)}
+        handlerSetState={this.handlerSetState.bind(this)}
       />
     );
   }
