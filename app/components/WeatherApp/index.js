@@ -11,13 +11,20 @@ import WeatherList from 'containers/WeatherList';
 const TYPE_LOCATION = 'LCS';
 const TYPE_WEATHER = 'WTR';
 
-const WeatherApp = ({state, handlerSetState, className}) => {
+const getContent = (state, handlerSetState) => {
   let content = <div>No Results</div>;
+
   if (state.type === TYPE_LOCATION && state.list.length) {
     content = <LocationList state={state} handlerSetState={handlerSetState}/>;
   } else if (state.type === TYPE_WEATHER && state.list.length) {
     content = <WeatherList state={state} />;
   }
+
+  return (content);
+};
+
+const WeatherApp = ({state, handlerSetState, className, handleClear}) => {
+  const content = getContent(state, handlerSetState);
   return (
     <div className={`${className}`}>
       <header className={`${className}__header`}>
@@ -34,7 +41,7 @@ const WeatherApp = ({state, handlerSetState, className}) => {
             </Button>
           </div>
           <div className={`${className}__actions-clear`}>
-            <Button>
+            <Button onClick={handleClear}>
               <i className="fa fa-trash-o">{''}</i>
             </Button>
           </div>
@@ -51,7 +58,8 @@ const WeatherApp = ({state, handlerSetState, className}) => {
 WeatherApp.propTypes = {
   className: PropTypes.string,
   state: PropTypes.object.isRequired,
-  handlerSetState: PropTypes.func.isRequired
+  handlerSetState: PropTypes.func.isRequired,
+  handleClear: PropTypes.func.isRequired
 };
 
 WeatherApp.defaultProps = {
