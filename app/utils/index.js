@@ -1,5 +1,7 @@
 import delay from './delay';
-import jsonp from './jsonp-promise';
+import lifeCycle from './lifeCycle';
+import jsonp from './jsonpPromise';
 
 export {delay};
+export {lifeCycle};
 export {jsonp};

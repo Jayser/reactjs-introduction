@@ -18,9 +18,7 @@ class WeatherApp extends Component {
     // pre-populate
     componentWillMount() {
         if (this.hasWeathers) {
-            getWeathers(this.state.list, (weathers) => {
-                this.setToState(TYPE_WEATHER, weathers);
-            });
+            getWeathers(this.state.list, this.handlerWeathers.bind(this));
         }
     }
 
@@ -31,13 +29,20 @@ class WeatherApp extends Component {
         });
     }
 
+    handlerWeathers(weathers) {
+        // save to storage for pre-populate
+        store.set(TYPE_WEATHER, weathers);
+
+        this.setToState(TYPE_WEATHER, store.get(TYPE_WEATHER));
+    }
+
     handlerWeather(weather) {
         const collection = (store.get(TYPE_WEATHER) || []).concat(weather);
 
         // save to storage for pre-populate
         store.set(TYPE_WEATHER, collection);
 
-        this.setToState(TYPE_WEATHER, collection);
+        this.setToState(TYPE_WEATHER, store.get(TYPE_WEATHER));
     }
 
     handlerLocation(locations) {

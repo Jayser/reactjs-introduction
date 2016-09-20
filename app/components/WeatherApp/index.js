@@ -1,6 +1,6 @@
 import './index.scss';
 
-import React, {Component, PropTypes} from 'react';
+import React, {createClass, PropTypes} from 'react';
 
 import {Logo, Button} from 'components/common';
 
@@ -9,18 +9,32 @@ import LocationsList from 'containers/LocationsList';
 import WeathersList from 'containers/WeathersList';
 
 import {LOCATION_TYPE} from 'constants/index';
+import {lifeCycle} from 'utils/index';
 
-class WeatherApp extends Component {
+const WeatherApp = createClass({
+    mixins: [lifeCycle],
 
-    renderLocationList() {
+    propTypes: {
+        className: PropTypes.string,
+        state: PropTypes.object.isRequired,
+        handlerLocation: PropTypes.func.isRequired,
+        handlerWeather: PropTypes.func.isRequired,
+        handleClear: PropTypes.func.isRequired
+    },
+
+    getDefaultProps: function() {
+        return { className: 'weather-app' }
+    },
+
+    renderLocationList: function() {
         return <LocationsList state={this.props.state} handlerWeather={this.props.handlerWeather}/>;
-    }
+    },
 
-    renderWeathersList() {
+    renderWeathersList: function() {
         return <WeathersList state={this.props.state}/>;
-    }
+    },
 
-    getContent() {
+    getContent: function() {
         const {state} = this.props;
         let content = null;
 
@@ -31,9 +45,9 @@ class WeatherApp extends Component {
         }
 
         return (content);
-    }
+    },
 
-    render() {
+    render: function() {
         const {handlerLocation, className, handleClear} = this.props;
         return (
             <div className={`${className}`}>
@@ -64,19 +78,6 @@ class WeatherApp extends Component {
             </div>
         )
     }
-
-}
-
-WeatherApp.propTypes = {
-    className: PropTypes.string,
-    state: PropTypes.object.isRequired,
-    handlerLocation: PropTypes.func.isRequired,
-    handlerWeather: PropTypes.func.isRequired,
-    handleClear: PropTypes.func.isRequired
-};
-
-WeatherApp.defaultProps = {
-    className: 'weather-app'
-};
+});
 
 export default WeatherApp;
