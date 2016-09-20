@@ -1,6 +1,8 @@
 {
   "env": {
-    "node": true
+    "browser": true,
+    "node": true,
+    "es6": true
   },
   "parserOptions": {
     "ecmaVersion": 7,
@@ -9,10 +11,6 @@
       "jsx": true,
       "experimentalObjectRestSpread": true
     }
-  },
-  "globals": {
-    "document": true,
-    "window": true
   },
   "plugins": [
     "react"

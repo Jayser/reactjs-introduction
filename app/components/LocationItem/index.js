@@ -4,13 +4,13 @@ import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 
 const LocationItem = (props) => (
-  <div className={classNames(props.defaultClassName, props.className)}
+  <li className={classNames(props.defaultClassName, props.className)}
        data-name={props.formatted_address}
-       data-lng={props.geometry.location.lng}
-       data-lat={props.geometry.location.lat}
+       data-longitude={props.geometry.location.lng}
+       data-latitude={props.geometry.location.lat}
        onClick={props.handlerWeather}>
     {props.formatted_address}
-  </div>
+  </li>
 );
 
 

@@ -1,37 +1,35 @@
 import React, {Component, PropTypes} from 'react';
 
-import geoLocationService from 'services/geoLocationService';
+import getLocation from 'services/geoLocationService';
 
 import {delay} from 'utils/index';
-import {Input} from 'components/form';
+import {Input} from 'components/common';
 
 const DELAY_TO_EXECUTE = 500;
-const LIST_TYPE = 'LCS';
 
 class SearchLocation extends Component {
-  submitHandler({ target }) {
-    let value = target.value;
-    delay(() => {
-      if (value) {
-        geoLocationService(value, ({ data }) => {
-          this.props.handlerSetState(LIST_TYPE, data.results);
-          target.value = '';
-        });
-      }
-    }, DELAY_TO_EXECUTE);
-  }
+    changeState(data) {
+        this.props.handlerLocation(data.results);
+    }
 
-  render() {
-    return <Input
-      type="text"
-      id="google-place-auto-complete"
-      placeholder="Enter a location"
-      onChange={(e) => this.submitHandler(e) }/>;
-  }
+    submitHandler({target}) {
+        delay(() => {
+            if (!target.value) { return; }
+            getLocation(target.value, ({data}) => this.changeState(data));
+        }, DELAY_TO_EXECUTE);
+    }
+
+    render() {
+        return <Input
+            type="text"
+            id="google-place-auto-complete"
+            placeholder="Enter a location"
+            onChange={(e) => this.submitHandler(e) }/>;
+    }
 }
 
 SearchLocation.propTypes = {
-  handlerSetState: PropTypes.func.isRequired
+    handlerLocation: PropTypes.func.isRequired
 };
 
 export default SearchLocation;

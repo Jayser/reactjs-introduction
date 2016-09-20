@@ -1,9 +1,31 @@
 import axios from 'axios';
 
-export default (address, callback) => {
-    return axios(`https://maps.google.com/maps/api/geocode/json?&address=${address}`)
+const URL = 'https://maps.google.com/maps/api/geocode/json?&address=';
+
+const _handlerError = (error) => {
+    console.log('request failed ', error);
+};
+
+export const fetch = (address) => {
+    return axios(`${URL}${address}`);
+};
+
+export const fetchAll = (addresses) => {
+    return axios.all(addresses.map((address) => {
+        return fetch(address);
+    }));
+};
+
+export const getLocation = (address, callback) => {
+    return fetch(address)
         .then(callback)
-        .catch(error => {
-            console.log('request failed', error);
-        });
-}
+        .catch(_handlerError);
+};
+
+export const getLocations = (addresses, callback) => {
+    return fetchAll(addresses)
+        .then(callback)
+        .catch(_handlerError);
+};
+
+export default getLocation;

@@ -1,49 +1,64 @@
 import React, {Component} from 'react';
 import store from 'store';
 
+import {getWeathers} from 'services/weatherService';
 import WeatherAppView from 'components/WeatherApp';
-
-const TYPE_WEATHER = 'WTR';
+import {LOCATION_TYPE, TYPE_WEATHER} from 'constants/index';
 
 class WeatherApp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      type: store.get('weatherList') ? TYPE_WEATHER : '',
-      list: store.get('weatherList') || []
-    };
-  }
-
-  handlerSetState(type, list) {
-    let collection;
-
-    if (TYPE_WEATHER === type) {
-      collection = store.get('weatherList') || [];
-      store.set('weatherList', collection.concat(list[0]));
-      collection = store.get('weatherList') || [];
+    constructor(props) {
+        super(props);
+        this.state = {
+            type: '',
+            list: store.get(TYPE_WEATHER) || []
+        };
+        this.hasWeathers = Boolean(this.state.list.length);
     }
 
-    this.setState({
-      type: type,
-      list: collection || list
-    });
-  }
+    // pre-populate
+    componentWillMount() {
+        if (this.hasWeathers) {
+            getWeathers(this.state.list, (weathers) => {
+                this.setToState(TYPE_WEATHER, weathers);
+            });
+        }
+    }
 
-  handleClear() {
-    store.clear();
-    this.handlerSetState('', []);
-  }
+    setToState(type, list) {
+        this.setState({
+            type: type,
+            list: list
+        });
+    }
 
-  render() {
-    return (
-      <WeatherAppView
-        {...this.props}
-        state={this.state}
-        handleClear={this.handleClear.bind(this)}
-        handlerSetState={this.handlerSetState.bind(this)}
-      />
-    );
-  }
+    handlerWeather(weather) {
+        const collection = (store.get(TYPE_WEATHER) || []).concat(weather);
+
+        // save to storage for pre-populate
+        store.set(TYPE_WEATHER, collection);
+
+        this.setToState(TYPE_WEATHER, collection);
+    }
+
+    handlerLocation(locations) {
+        this.setToState(LOCATION_TYPE, locations);
+    }
+
+    handlerClear() {
+        store.clear();
+        this.setToState('', []);
+    }
+
+    render() {
+        return (
+            <WeatherAppView
+                state={this.state}
+                handleClear={this.handlerClear.bind(this)}
+                handlerLocation={this.handlerLocation.bind(this)}
+                handlerWeather={this.handlerWeather.bind(this)}
+            />
+        );
+    }
 }
 
 export default WeatherApp;
