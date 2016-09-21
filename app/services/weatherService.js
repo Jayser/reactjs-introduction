@@ -6,17 +6,15 @@ const _shouldUpdate = (timestamp) => {
 };
 
 const _parse = (weather) => {
-    const {latitude, longitude, timestamp, name} = weather;
-    const result = _shouldUpdate(timestamp) ? fetch(latitude, longitude) : Promise.resolve(weather);
-
-    return result.then(newWeather => ({...newWeather, name, timestamp: Date.now()}) );
+    const result = _shouldUpdate(weather.timestamp) ? fetch(weather) : Promise.resolve(weather);
+    return result.then(newWeather => ({timestamp: Date.now(), ...newWeather, name: weather.name}) );
 };
 
 const _handlerError = (error) => {
     console.log('request fail ', error);
 };
 
-export const fetch = (latitude, longitude) => {
+export const fetch = ({latitude, longitude}) => {
     return jsonp(`${WEATHER_SERVICE}/${ latitude },${ longitude }?units=si`)
 };
 
@@ -25,8 +23,8 @@ export const fetchAll = (weathers) => {
 };
 
 export const getWeather = ({name, latitude, longitude}, callback) => {
-    return fetch(latitude, longitude)
-        .then((data) => callback({...data, name, timestamp: Date.now()}))
+    return fetch({latitude, longitude})
+        .then(data => callback({timestamp: Date.now(), ...data, name}))
         .catch(_handlerError);
 };
 
