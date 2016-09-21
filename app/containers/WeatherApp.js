@@ -37,7 +37,7 @@ class WeatherApp extends Component {
     handlerPeriod(period = [], idx = 0) {
         this.setState({
             ...this.state,
-            period: Math.ceil(period[idx]) || 1
+            period: Number(period[idx]) || 1
         });
     }
 

@@ -21,7 +21,7 @@ class WeatherList extends Component {
         return (
             <div>
                 {this.props.state.list.map((weather, idx) => {
-                    return (<WeatherItem key={idx} state={weather}/>)
+                    return (<WeatherItem key={idx} state={this.props.state} weather={weather} />)
                 })}
             </div>
         );
