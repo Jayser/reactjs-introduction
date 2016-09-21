@@ -4,6 +4,7 @@
   background: #041121;
   color: #fff;
   height: 680px;
+  position: relative;
 
   &__header {
     display: flex;
@@ -46,5 +47,16 @@
       float: left;
       padding: 0 5px;
     }
+  }
+
+  &__footer {
+    text-align: center;
+    box-sizing: border-box;
+    padding-top: 5%;
+    height: 10%;
+    background: #243952;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
   }
 }

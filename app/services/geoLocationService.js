@@ -1,31 +1,24 @@
 import axios from 'axios';
-
-const URL = 'https://maps.google.com/maps/api/geocode/json?&address=';
+import {GEO_LOCATION_SERVICE} from 'constants/index'
 
 const _handlerError = (error) => {
     console.log('request failed ', error);
 };
 
 export const fetch = (address) => {
-    return axios(`${URL}${address}`);
+    return axios(`${GEO_LOCATION_SERVICE}${address}`);
 };
 
 export const fetchAll = (addresses) => {
-    return axios.all(addresses.map((address) => {
-        return fetch(address);
-    }));
+    return axios.all(addresses.map(address => fetch(address)));
 };
 
 export const getLocation = (address, callback) => {
-    return fetch(address)
-        .then(callback)
-        .catch(_handlerError);
+    return fetch(address).then(callback).catch(_handlerError);
 };
 
 export const getLocations = (addresses, callback) => {
-    return fetchAll(addresses)
-        .then(callback)
-        .catch(_handlerError);
+    return fetchAll(addresses).then(callback).catch(_handlerError);
 };
 
 export default getLocation;

@@ -1,10 +1,5 @@
 import {jsonp} from 'utils/index';
-
-const URL = 'https://api.forecast.io/forecast';
-const WEATHER_API = 'e6b2ec46c1a1424d28fd7606c38272c6';
-
-const MILLISECONDS = 1000;
-const MINUTES = 60;
+import {MILLISECONDS, MINUTES, WEATHER_SERVICE} from 'constants/index';
 
 const _shouldUpdate = (timestamp) => {
     return Math.ceil((Date.now() - timestamp) / (MILLISECONDS * MINUTES)) > MINUTES;
@@ -14,9 +9,7 @@ const _parse = (weather) => {
     const {latitude, longitude, timestamp, name} = weather;
     const result = _shouldUpdate(timestamp) ? fetch(latitude, longitude) : Promise.resolve(weather);
 
-    return result.then((newWeather) => {
-        return {...newWeather, name, timestamp: Date.now()};
-    });
+    return result.then(newWeather => ({...newWeather, name, timestamp: Date.now()}) );
 };
 
 const _handlerError = (error) => {
@@ -24,7 +17,7 @@ const _handlerError = (error) => {
 };
 
 export const fetch = (latitude, longitude) => {
-    return jsonp(`${URL}/${WEATHER_API}/${ latitude },${ longitude }?units=si`)
+    return jsonp(`${WEATHER_SERVICE}/${ latitude },${ longitude }?units=si`)
 };
 
 export const fetchAll = (weathers) => {
@@ -39,8 +32,7 @@ export const getWeather = ({name, latitude, longitude}, callback) => {
 
 export const getWeathers = (weathers, callback) => {
     return fetchAll(weathers)
-        .then((data) => callback(data))
-        .catch(_handlerError);
+        .then((data) => callback(data)).catch(_handlerError);
 };
 
 export default getWeather;

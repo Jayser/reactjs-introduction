@@ -2,13 +2,13 @@ import './index.scss';
 
 import React, {createClass, PropTypes} from 'react';
 
-import {Logo, Button} from 'components/common';
+import {Logo, Button, Slider} from 'components/common';
 
 import SearchLocation from 'containers/SearchLocation';
 import LocationsList from 'containers/LocationsList';
 import WeathersList from 'containers/WeathersList';
 
-import {LOCATION_TYPE} from 'constants/index';
+import {LOCATION_TYPE, MIN_PERIOD, MAX_PERIOD} from 'constants/index';
 import {lifeCycle} from 'utils/index';
 
 const WeatherApp = createClass({
@@ -19,6 +19,7 @@ const WeatherApp = createClass({
         state: PropTypes.object.isRequired,
         handlerLocation: PropTypes.func.isRequired,
         handlerWeather: PropTypes.func.isRequired,
+        handlerPeriod: PropTypes.func.isRequired,
         handleClear: PropTypes.func.isRequired
     },
 
@@ -47,8 +48,14 @@ const WeatherApp = createClass({
         return (content);
     },
 
+    handlerUpdatePeriod: function(period = [], idx = 0) {
+        if (this.refs['periodStatus'] ){
+            this.refs['periodStatus'].innerHTML = Math.ceil(period[idx]);
+        }
+    },
+
     render: function() {
-        const {handlerLocation, className, handleClear} = this.props;
+        const {handlerLocation, handlerPeriod, className, handleClear, state} = this.props;
         return (
             <div className={`${className}`}>
                 <header className={`${className}__header`}>
@@ -74,7 +81,16 @@ const WeatherApp = createClass({
                 <div className={`${className}__content`}>
                     {this.getContent()}
                 </div>
-                <footer className={`${className}__footer`}>{''}</footer>
+                <footer className={`${className}__footer`}>
+                    <Slider
+                        ref="slider"
+                        range={{min: MIN_PERIOD, max: MAX_PERIOD}}
+                        start={[state.period]}
+                        onChange={handlerPeriod}
+                        onUpdate={this.handlerUpdatePeriod}
+                    />
+                    <div ref="periodStatus">{state.period}</div>
+                </footer>
             </div>
         )
     }

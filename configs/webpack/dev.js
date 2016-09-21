@@ -30,6 +30,10 @@ module.exports = {
                 loaders: ['style', 'css?sourceMap', 'sass?sourceMap']
             },
             {
+                test: /\.css/,
+                loaders: ['style', 'css?sourceMap']
+            },
+            {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: 'url?limit=10000&mimetype=application/font-woff&name=' + cfgBase.paths.fonts + '/[name].[ext]?[hash]'
             },

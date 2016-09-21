@@ -1,11 +1,10 @@
 import React, {Component, PropTypes} from 'react';
 
 import getLocation from 'services/geoLocationService';
+import {DELAY_TO_EXECUTE} from 'constants/index';
 
-import {delay} from 'utils/index';
 import {Input} from 'components/common';
-
-const DELAY_TO_EXECUTE = 500;
+import {delay} from 'utils/index';
 
 class SearchLocation extends Component {
     changeState(data) {

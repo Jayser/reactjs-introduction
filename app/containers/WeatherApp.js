@@ -10,6 +10,7 @@ class WeatherApp extends Component {
         super(props);
         this.state = {
             type: '',
+            period: 1,
             list: store.get(TYPE_WEATHER) || []
         };
         this.hasWeathers = Boolean(this.state.list.length);
@@ -22,18 +23,22 @@ class WeatherApp extends Component {
         }
     }
 
-    setToState(type, list) {
-        this.setState({
-            type: type,
-            list: list
-        });
-    }
-
     handlerWeathers(weathers) {
         // save to storage for pre-populate
         store.set(TYPE_WEATHER, weathers);
 
-        this.setToState(TYPE_WEATHER, store.get(TYPE_WEATHER));
+        this.setState({
+            ...this.state,
+            type: TYPE_WEATHER,
+            list: store.get(TYPE_WEATHER)
+        });
+    }
+
+    handlerPeriod(period = [], idx = 0) {
+        this.setState({
+            ...this.state,
+            period: Math.ceil(period[idx]) || 1
+        });
     }
 
     handlerWeather(weather) {
@@ -42,16 +47,28 @@ class WeatherApp extends Component {
         // save to storage for pre-populate
         store.set(TYPE_WEATHER, collection);
 
-        this.setToState(TYPE_WEATHER, store.get(TYPE_WEATHER));
+        this.setState({
+            ...this.state,
+            type: TYPE_WEATHER,
+            list: store.get(TYPE_WEATHER)
+        });
     }
 
     handlerLocation(locations) {
-        this.setToState(LOCATION_TYPE, locations);
+        this.setState({
+            ...this.state,
+            type: LOCATION_TYPE,
+            list: locations
+        });
     }
 
     handlerClear() {
         store.clear();
-        this.setToState('', []);
+        this.setState({
+            type: '',
+            period: 1,
+            list: []
+        });
     }
 
     render() {
@@ -60,6 +77,7 @@ class WeatherApp extends Component {
                 state={this.state}
                 handleClear={this.handlerClear.bind(this)}
                 handlerLocation={this.handlerLocation.bind(this)}
+                handlerPeriod={this.handlerPeriod.bind(this)}
                 handlerWeather={this.handlerWeather.bind(this)}
             />
         );
