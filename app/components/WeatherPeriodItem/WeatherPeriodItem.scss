@@ -1,0 +1,31 @@
+.weather-period {
+  position: relative;
+  transition: height .3s;
+  overflow: hidden;
+  &__hide {
+    height: 0 !important;
+  }
+  &__wrapper {
+    padding: 10px 15px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #ddd;
+    &:first-child {
+      border-top: none;
+    }
+  }
+  &__icon {
+    display: inline-block;
+    margin-top: 5px;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  &__temperature {
+    display: inline-block;
+    margin-right: 5px;
+    color: #D15549;
+  }
+  &__summary {
+    display: inline-block;
+  }
+
+}

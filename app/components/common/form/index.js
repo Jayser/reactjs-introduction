@@ -1,5 +1,5 @@
 import Input from './Input';
 import Button from './Button';
+import ButtonReset from './ButtonReset';
 
-export {Input};
-export {Button};
+export {Input, Button, ButtonReset};

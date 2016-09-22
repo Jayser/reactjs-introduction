@@ -5,8 +5,10 @@ export const MINUTES = 60;
 export const DELAY_TO_EXECUTE = 500;
 export const MIN_PERIOD = 1;
 export const MAX_PERIOD = 7;
-export const FIRST = 0;
-export const ICON_COLOR = '#c2c5ca';
+export const FIRST_ELEMENT = 0;
+export const ICON_COLOR = '#222';
+export const CELSIUS = 'celsius';
+export const FAHRENHEIT = 'fahrenheit';
 
 // Services
 export const GEO_LOCATION_SERVICE = 'https://maps.google.com/maps/api/geocode/json?&address=';

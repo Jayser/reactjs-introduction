@@ -5,5 +5,3 @@ export const random = () => {
 export const randomRange = (min, max) => {
     return (~~Math.random() * max) + min;
 };
-
-export default randomRange;

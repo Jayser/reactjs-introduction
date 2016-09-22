@@ -1,9 +1,14 @@
 import delay from './delay';
 import lifeCycle from './lifeCycle';
 import jsonp from './jsonpPromise';
-import random from './random';
+import {random, randomRange} from './random';
+import {closest} from './dom';
 
-export {delay};
-export {lifeCycle};
-export {jsonp};
-export {random};
+export {
+    delay,
+    lifeCycle,
+    jsonp,
+    random,
+    randomRange,
+    closest
+};

@@ -3,13 +3,14 @@ import store from 'store';
 
 import {getWeathers} from 'services/weatherService';
 import WeatherAppView from 'components/WeatherApp';
-import {LOCATION_TYPE, TYPE_WEATHER} from 'constants/index';
+import {CELSIUS, FIRST_ELEMENT, LOCATION_TYPE, TYPE_WEATHER} from 'constants/index';
 
 class WeatherApp extends Component {
     constructor(props) {
         super(props);
         this.state = {
             type: '',
+            measure: CELSIUS,
             period: 1,
             list: store.get(TYPE_WEATHER) || []
         };
@@ -62,6 +63,20 @@ class WeatherApp extends Component {
         });
     }
 
+    handlerRemove(time) {
+        const newState = store.get(TYPE_WEATHER).filter(weather => {
+            return weather.daily.data[FIRST_ELEMENT].time !== time;
+        });
+
+        store.set(TYPE_WEATHER, newState);
+
+        this.setState({
+            ...this.state,
+            type: TYPE_WEATHER,
+            list: store.get(TYPE_WEATHER)
+        });
+    }
+
     handlerClear() {
         store.clear();
         this.setState({
@@ -78,6 +93,7 @@ class WeatherApp extends Component {
                 handleClear={this.handlerClear.bind(this)}
                 handlerLocation={this.handlerLocation.bind(this)}
                 handlerPeriod={this.handlerPeriod.bind(this)}
+                handlerRemove={this.handlerRemove.bind(this)}
                 handlerWeather={this.handlerWeather.bind(this)}
             />
         );
