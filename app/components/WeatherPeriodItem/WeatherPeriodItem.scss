@@ -2,6 +2,13 @@
   position: relative;
   transition: height .3s;
   overflow: hidden;
+  &__date {
+    display: inline-block;
+    font-size: 12px;
+    text-align: center;
+    margin-right: 12px;
+    vertical-align: middle;
+  }
   &__hide {
     height: 0 !important;
   }
@@ -9,6 +16,7 @@
     padding: 10px 15px;
     border-top: 1px solid #fff;
     border-bottom: 1px solid #ddd;
+    line-height: 1.2;
     &:first-child {
       border-top: none;
     }
@@ -21,11 +29,15 @@
   }
   &__temperature {
     display: inline-block;
+    vertical-align: middle;
     margin-right: 5px;
     color: #D15549;
   }
   &__summary {
+    vertical-align: middle;
     display: inline-block;
+    width: 220px;
+    margin-left: 10px;
   }
 
 }

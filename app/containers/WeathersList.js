@@ -52,8 +52,8 @@ class WeatherList extends Component {
 
         return (
             <div ref={this.handlerWeatherPeriod.bind(this)} className={classNames(`weather-period`)}>
-                {weatherOnWeek.slice(MIN_PERIOD, perDays).map(period => (
-                    <WeatherPeriodItem key={random()} period={period} />
+                {weatherOnWeek.slice(MIN_PERIOD, perDays).map((forDay, num) => (
+                    <WeatherPeriodItem key={random()} dayNum={num} weather={forDay} />
                 ))}
             </div>
         )

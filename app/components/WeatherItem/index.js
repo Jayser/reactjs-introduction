@@ -17,9 +17,9 @@ const Toggle = (e) => {
 const LocationItem = ({weather = {}, handlerRemove, defaultClassName, className}) => {
     const currentlyWeather = weather.daily && weather.daily.data && weather.daily.data[FIRST_ELEMENT] || {};
     const temperature = `
-        ${~~currentlyWeather.temperatureMin} °C
+        Min ${~~currentlyWeather.temperatureMin} °C
         -
-        ${~~currentlyWeather.temperatureMax} °C
+        Max ${~~currentlyWeather.temperatureMax} °C
     `;
     return (
         <div className={classNames(defaultClassName, className)} onClick={Toggle}>
@@ -29,7 +29,9 @@ const LocationItem = ({weather = {}, handlerRemove, defaultClassName, className}
             <div className={classNames(`${defaultClassName}-info`)}>
                 <div className={classNames(`${defaultClassName}-location`)}>{weather.name}</div>
                 <div className={classNames(`${defaultClassName}-summary`)}>{currentlyWeather.summary}</div>
-                <div className={classNames(`${defaultClassName}-temperature`)}>{temperature}</div>
+                <div className={classNames(`${defaultClassName}-temperature`)}>
+                    {`Currency ${~~weather.currently.temperature} °C, ${temperature}`}
+                </div>
             </div>
             <i className={classNames(`${defaultClassName}-remove`)} onClick={() => handlerRemove(currentlyWeather.time)}>X</i>
         </div>

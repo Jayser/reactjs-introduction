@@ -10,15 +10,11 @@ export const closest = (el, selector) => {
         return false;
     });
 
-    var parent;
-
-    // traverse parents
     while (el) {
-        parent = el.parentElement;
-        if (parent && parent[matchesFn](selector)) {
-            return parent;
+        if (el && el[matchesFn](selector)) {
+            return el;
         }
-        el = parent;
+        el = el.parentElement;
     }
 
     return {};

@@ -3,6 +3,7 @@ import lifeCycle from './lifeCycle';
 import jsonp from './jsonpPromise';
 import {random, randomRange} from './random';
 import {closest} from './dom';
+import {getDayOfWeekByOffset, nextDateFormat} from './nextDay';
 
 export {
     delay,
@@ -10,5 +11,7 @@ export {
     jsonp,
     random,
     randomRange,
-    closest
+    closest,
+    getDayOfWeekByOffset,
+    nextDateFormat
 };

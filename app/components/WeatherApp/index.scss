@@ -41,10 +41,9 @@
     order: 3;
     display: inline-flex;
 
-    &-add,
-    &-delete{
-      float: left;
-      padding: 0 5px;
+    &-clear{
+      display: inline-block;
+      margin-left: 5px;
     }
   }
 

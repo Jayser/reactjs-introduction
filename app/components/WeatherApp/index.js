@@ -55,11 +55,15 @@ const WeatherApp = createClass({
         }
     },
 
+    handlerSubmit(e) {
+        e.preventDefault();
+    },
+
     render: function() {
         const {handlerLocation, handlerPeriod, className, handleClear, state} = this.props;
         return (
             <div className={`${className}`}>
-                <form className={`${className}__header`}>
+                <form className={`${className}__header`} onSubmit={this.handlerSubmit}>
                     <div className={`${className}__logo`}>
                         <Logo />
                     </div>
@@ -69,11 +73,6 @@ const WeatherApp = createClass({
                     <div className={`${className}__actions`}>
                         <div className={`${className}__actions-reset`}>
                             <ButtonReset type="reset" />
-                        </div>
-                        <div className={`${className}__actions-add`}>
-                            <Button>
-                                <i className="fa fa-plus">{''}</i>
-                            </Button>
                         </div>
                         <div className={`${className}__actions-clear`}>
                             <Button onClick={handleClear}>
