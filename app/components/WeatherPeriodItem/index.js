@@ -3,9 +3,13 @@ import './WeatherPeriodItem.scss';
 import React, {createClass, PropTypes} from 'react';
 import classNames from 'classnames';
 
-import {getDayOfWeekByOffset, nextDateFormat} from 'utils/index';
+import {getDayOfWeekByOffset, lifeCycle, nextDateFormat} from 'utils/index';
 
-const LocationItem = createClass({
+console.group('[LifeCycle] WeatherPeriodItem');
+
+const WeatherPeriodItem = createClass({
+    mixins: [lifeCycle],
+
     propTypes: {
         weather: PropTypes.object.isRequired,
         defaultClassName: PropTypes.string,
@@ -18,7 +22,7 @@ const LocationItem = createClass({
     },
 
     render: function () {
-        const {weather = {}, dayNum = 0,  defaultClassName, className} = this.props;
+        const {weather = {}, dayNum = 0, defaultClassName, className} = this.props;
 
         const temperature = `
             ${~~weather.temperatureMin} °C
@@ -48,4 +52,4 @@ const LocationItem = createClass({
     }
 });
 
-export default LocationItem;
+export default WeatherPeriodItem;

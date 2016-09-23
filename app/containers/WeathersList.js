@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {createClass, PropTypes} from 'react';
 import Skycons from 'skycons';
 import classNames from 'classnames';
 
@@ -7,14 +7,32 @@ import {random} from 'utils/index';
 import WeatherItem from 'components/WeatherItem';
 import WeatherPeriodItem from 'components/WeatherPeriodItem';
 import {MIN_PERIOD, ICON_COLOR} from 'constants/index';
+import {lifeCycle} from 'utils/index';
 
-class WeatherList extends Component {
-    componentWillMount() {
+console.group('[LifeCycle] WeatherList');
+
+const WeatherList = createClass ({
+    mixins: [lifeCycle],
+
+    propTypes: {
+        state: PropTypes.object.isRequired,
+        className: PropTypes.string,
+        defaultClassName: PropTypes.string,
+        handlerRemove: PropTypes.func.isRequired
+    },
+
+    getDefaultProps: function() {
+      return {
+          defaultClassName: 'weather-list'
+      }
+    } ,
+
+    componentWillMount: function() {
         Skycons(window);
         this.skyCons = new (Skycons(window))({"color": ICON_COLOR});
-    }
+    },
 
-    handlerSkyCons(action) {
+    handlerSkyCons: function(action) {
         this.props.state.list.forEach(({daily = {}}) => {
             const weathers = daily.data || [];
             weathers.forEach(weather => {
@@ -23,70 +41,59 @@ class WeatherList extends Component {
             });
         });
         this.skyCons.play();
-    }
+    },
 
-    componentDidMount() {
+    componentDidMount: function() {
         this.handlerSkyCons('add');
-    }
+    },
 
-    componentDidUpdate() {
+    componentDidUpdate: function() {
         this.handlerSkyCons('add');
-    }
+    },
 
-    componentWillUnmount() {
+    componentWillUnmount: function() {
         this.handlerSkyCons('remove');
-    }
+    },
 
-    handlerWeatherPeriod(el) {
+    handlerWeatherPeriod: function(el) {
         if(el) {
             el.style.height = `${el.offsetHeight}px`;
         }
-    }
+    },
 
-    renderForPeriod({daily = {}}) {
+    renderForPeriod: function({daily = {}}) {
         const weatherOnWeek = (daily.data && daily.data) || [];
         const {state} = this.props;
         const perDays = state.period + MIN_PERIOD;
-        
+
         if (state.period <= MIN_PERIOD) { return; }
 
         return (
-            <div ref={this.handlerWeatherPeriod.bind(this)} className={classNames(`weather-period`)}>
+            <div ref={this.handlerWeatherPeriod} className={classNames(`weather-period`)}>
                 {weatherOnWeek.slice(MIN_PERIOD, perDays).map((forDay, num) => (
                     <WeatherPeriodItem key={random()} dayNum={num} weather={forDay} />
                 ))}
             </div>
         )
-    }
+    },
 
-    renderContent(weather) {
+    renderContent: function(weather) {
         return (
             <div key={random()} className={classNames(`${this.props.defaultClassName}__wrapper`)}>
                 <WeatherItem weather={weather} handlerRemove={this.props.handlerRemove} />
                 {this.renderForPeriod(weather)}
             </div>
         );
-    }
+    },
 
-    render() {
+    render: function() {
         const {state, defaultClassName, className} = this.props;
         return (
             <div className={classNames(defaultClassName, className)}>
-                {state.list.map(this.renderContent.bind(this))}
+                {state.list.map(this.renderContent)}
             </div>
         );
     }
-}
-
-WeatherList.propTypes = {
-    state: PropTypes.object.isRequired,
-    className: PropTypes.string,
-    defaultClassName: PropTypes.string,
-    handlerRemove: PropTypes.func.isRequired
-};
-
-WeatherList.defaultProps = {
-    defaultClassName: 'weather-list'
-};
+});
 
 export default WeatherList;

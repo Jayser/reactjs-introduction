@@ -2,20 +2,21 @@ import './index.scss';
 
 import React, {createClass, PropTypes} from 'react';
 
-import {Logo, Button, Slider, ButtonReset} from 'components/common';
-
 import SearchLocation from 'containers/SearchLocation';
 import LocationsList from 'containers/LocationsList';
 import WeathersList from 'containers/WeathersList';
 
+import {Logo, Button, Slider, ButtonReset} from 'components/common';
 import {LOCATION_TYPE, MIN_PERIOD, MAX_PERIOD} from 'constants/index';
 import {lifeCycle} from 'utils/index';
+
+console.group('[LifeCycle] WeatherAppView');
 
 const WeatherApp = createClass({
     mixins: [lifeCycle],
 
     propTypes: {
-        className: PropTypes.string,
+        defaultClassName: PropTypes.string,
         state: PropTypes.object.isRequired,
         handlerLocation: PropTypes.func.isRequired,
         handlerWeather: PropTypes.func.isRequired,
@@ -25,15 +26,15 @@ const WeatherApp = createClass({
     },
 
     getDefaultProps: function() {
-        return { className: 'weather-app' }
+        return { defaultClassName: 'weather-app' };
     },
 
     renderLocationList: function() {
-        return <LocationsList state={this.props.state} handlerWeather={this.props.handlerWeather}/>;
+        return <LocationsList state={ this.props.state } handlerWeather={ this.props.handlerWeather }/>;
     },
 
     renderWeathersList: function() {
-        return <WeathersList state={this.props.state} handlerRemove={this.props.handlerRemove} />;
+        return <WeathersList state={ this.props.state } handlerRemove={ this.props.handlerRemove } />;
     },
 
     getContent: function() {
@@ -49,7 +50,7 @@ const WeatherApp = createClass({
         return (content);
     },
 
-    handlerUpdatePeriod: function(period = [], idx = 0) {
+    handlerUpdatePeriod: function(period = [], idx) {
         if (this.refs['periodStatus'] ){
             this.refs['periodStatus'].innerHTML = Math.ceil(period[idx]);
         }
@@ -60,31 +61,38 @@ const WeatherApp = createClass({
     },
 
     render: function() {
-        const {handlerLocation, handlerPeriod, className, handleClear, state} = this.props;
+        const {
+            handlerLocation,
+            handlerPeriod,
+            defaultClassName,
+            handleClear,
+            state
+        } = this.props;
+
         return (
-            <div className={`${className}`}>
-                <form className={`${className}__header`} onSubmit={this.handlerSubmit}>
-                    <div className={`${className}__logo`}>
+            <div className={` ${defaultClassName}` }>
+                <form className={` ${defaultClassName}__header` } onSubmit={ this.handlerSubmit }>
+                    <div className={` ${defaultClassName}__logo` }>
                         <Logo />
                     </div>
-                    <div className={`${className}__search`}>
+                    <div className={` ${defaultClassName}__search` }>
                         <SearchLocation handlerLocation={handlerLocation}/>
                     </div>
-                    <div className={`${className}__actions`}>
-                        <div className={`${className}__actions-reset`}>
+                    <div className={` ${defaultClassName}__actions` }>
+                        <div className={` ${defaultClassName}__actions-reset` }>
                             <ButtonReset type="reset" />
                         </div>
-                        <div className={`${className}__actions-clear`}>
+                        <div className={` ${defaultClassName}__actions-clear` }>
                             <Button onClick={handleClear}>
                                 <i className="fa fa-trash-o">{''}</i>
                             </Button>
                         </div>
                     </div>
                 </form>
-                <div className={`${className}__content`}>
+                <div className={` ${defaultClassName}__content` }>
                     {this.getContent()}
                 </div>
-                <footer className={`${className}__footer`}>
+                <footer className={` ${defaultClassName}__footer` }>
                     <Slider
                         ref="slider"
                         connect="lower"
@@ -93,10 +101,10 @@ const WeatherApp = createClass({
                         onChange={handlerPeriod}
                         onUpdate={this.handlerUpdatePeriod}
                     />
-                    <div ref="periodStatus" className={`${className}__period`}>
+                    <div ref="periodStatus" className={` ${defaultClassName}__period` }>
                         {state.period}
                     </div>
-                    <div className={`${className}__degrees`}>
+                    <div className={` ${defaultClassName}__degrees` }>
                         <span>F</span> | <span>C</span>
                     </div>
                 </footer>

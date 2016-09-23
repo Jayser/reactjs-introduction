@@ -1,31 +1,44 @@
-import React, {Component} from 'react';
+import React, { createClass } from 'react';
 import store from 'store';
 
 import {getWeathers} from 'services/weatherService';
 import WeatherAppView from 'components/WeatherApp';
-import {CELSIUS, FIRST_ELEMENT, LOCATION_TYPE, TYPE_WEATHER} from 'constants/index';
+import {lifeCycle} from 'utils/index';
 
-class WeatherApp extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+import {
+    CELSIUS,
+    FIRST_ELEMENT,
+    LOCATION_TYPE,
+    TYPE_WEATHER,
+    MIN_PERIOD
+} from 'constants/index';
+
+console.group('[LifeCycle] WeatherApp');
+
+const WeatherApp = createClass({
+    mixins: [lifeCycle],
+
+    getInitialState: function() {
+        return {
             type: '',
             measure: CELSIUS,
             period: 1,
             list: store.get(TYPE_WEATHER) || []
-        };
-        this.hasWeathers = Boolean(this.state.list.length);
-    }
+        }
+    },
 
     // pre-populate
-    componentWillMount() {
-        if (this.hasWeathers) {
-            getWeathers(this.state.list, this.handlerWeathers.bind(this));
-        }
-    }
+    componentWillMount: function() {
+        const { list } = this.state;
+        const hasWeathers = Boolean(list.length);
 
-    handlerWeathers(weathers) {
-        // save to storage for pre-populate
+        if (hasWeathers) {
+            getWeathers(list, this.handlerWeathers);
+        }
+    },
+
+    handlerWeathers: function(weathers) {
+        // save to storage then pre-populate
         store.set(TYPE_WEATHER, weathers);
 
         this.setState({
@@ -33,16 +46,16 @@ class WeatherApp extends Component {
             type: TYPE_WEATHER,
             list: store.get(TYPE_WEATHER)
         });
-    }
+    },
 
-    handlerPeriod(period = [], idx = 0) {
+    handlerPeriod: function(period = [], idx) {
         this.setState({
             ...this.state,
-            period: Number(period[idx]) || 1
+            period: Number(period[idx]) || MIN_PERIOD
         });
-    }
+    },
 
-    handlerWeather(weather) {
+    handlerWeather: function(weather) {
         const collection = (store.get(TYPE_WEATHER) || []).concat(weather);
 
         // save to storage for pre-populate
@@ -53,17 +66,17 @@ class WeatherApp extends Component {
             type: TYPE_WEATHER,
             list: store.get(TYPE_WEATHER)
         });
-    }
+    },
 
-    handlerLocation(locations) {
+    handlerLocation: function(locations) {
         this.setState({
             ...this.state,
             type: LOCATION_TYPE,
             list: locations
         });
-    }
+    },
 
-    handlerRemove(time) {
+    handlerRemove: function(time) {
         const newState = store.get(TYPE_WEATHER).filter(weather => {
             return weather.daily.data[FIRST_ELEMENT].time !== time;
         });
@@ -75,29 +88,29 @@ class WeatherApp extends Component {
             type: TYPE_WEATHER,
             list: store.get(TYPE_WEATHER)
         });
-    }
+    },
 
-    handlerClear() {
+    handlerClear: function() {
         store.clear();
         this.setState({
             type: '',
             period: 1,
             list: []
         });
-    }
+    },
 
-    render() {
+    render: function() {
         return (
             <WeatherAppView
                 state={this.state}
-                handleClear={this.handlerClear.bind(this)}
-                handlerLocation={this.handlerLocation.bind(this)}
-                handlerPeriod={this.handlerPeriod.bind(this)}
-                handlerRemove={this.handlerRemove.bind(this)}
-                handlerWeather={this.handlerWeather.bind(this)}
+                handleClear={this.handlerClear}
+                handlerLocation={this.handlerLocation}
+                handlerPeriod={this.handlerPeriod}
+                handlerRemove={this.handlerRemove}
+                handlerWeather={this.handlerWeather}
             />
         );
     }
-}
+});
 
 export default WeatherApp;

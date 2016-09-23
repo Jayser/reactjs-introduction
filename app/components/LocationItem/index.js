@@ -1,29 +1,49 @@
 import './index.scss';
 
-import React, {PropTypes} from 'react';
+import React, {createClass, PropTypes} from 'react';
 import classNames from 'classnames';
 
-const LocationItem = (props) => (
-  <li className={classNames(props.defaultClassName, props.className)}
-       data-name={props.formatted_address}
-       data-longitude={props.geometry.location.lng}
-       data-latitude={props.geometry.location.lat}
-       onClick={props.handlerWeather}>
-    {props.formatted_address}
-  </li>
-);
+import {lifeCycle} from 'utils/index';
 
+console.group('[LifeCycle] LocationItem');
 
-LocationItem.propTypes = {
-  formatted_address: PropTypes.string.isRequired,
-  geometry: PropTypes.object.isRequired,
-  defaultClassName: PropTypes.string,
-  className: PropTypes.string,
-  handlerWeather: PropTypes.func.isRequired
-};
+const LocationItem = createClass({
+    mixins: [lifeCycle],
 
-LocationItem.defaultProps = {
-  defaultClassName: 'location__item'
-};
+    propTypes: {
+        formatted_address: PropTypes.string.isRequired,
+        geometry: PropTypes.object.isRequired,
+        defaultClassName: PropTypes.string,
+        className: PropTypes.string,
+        handlerWeather: PropTypes.func.isRequired
+    },
+
+    getDefaultProps: function () {
+        return {
+            defaultClassName: 'location__item'
+        }
+    },
+
+    render() {
+        const {
+            formatted_address,
+            className,
+            defaultClassName,
+            geometry,
+            handlerWeather
+        } = this.props;
+
+        return (
+            <li className={classNames(defaultClassName, className)}
+                data-name={formatted_address}
+                data-longitude={geometry.location.lng}
+                data-latitude={geometry.location.lat}
+                onClick={handlerWeather}>
+                {formatted_address}
+            </li>
+        )
+    }
+
+});
 
 export default LocationItem;
