@@ -1,0 +1,17 @@
+
+.autocomplete-list  {
+    margin: 0px;
+    padding: 0px;
+    li {
+        height: 30px;
+        list-style-type: none;
+        margin-top: 2px;
+        vertical-align: middle;
+        span {
+            vertical-align: middle;
+            height:30px;
+            border: solid 1px black;
+            cursor: pointer;
+        }
+    }
+}          

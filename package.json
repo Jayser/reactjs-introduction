@@ -57,6 +57,7 @@
   },
   "homepage": "https://github.com/Jayser/reactjs-synoptik#readme",
   "dependencies": {
+    "axios": "^0.14.0",
     "babel-preset-react": "^6.11.1",
     "font-awesome": "^4.6.3",
     "react": "^15.3.1",
@@ -71,6 +72,7 @@
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-latest": "^6.14.0",
     "babel-preset-stage-0": "^6.5.0",
+    "babel-runtime": "^6.11.6",
     "better-npm-run": "0.0.11",
     "clean-webpack-plugin": "^0.1.10",
     "css-loader": "^0.25.0",
