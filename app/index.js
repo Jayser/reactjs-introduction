@@ -2,33 +2,36 @@ import './assets/scss/main.scss';
 
 import React from 'react';
 import {render} from 'react-dom';
-import axios from 'axios';
+
+import {GetLocation} from './components/actions/index.js'
+
 
 import AutocompleteList from './components/autocomplete-list/index.js';
 
 class WeatherApp extends React.Component{
     constructor (props) {
         super(props);
-        this.state= {
+        this.state = {
             type: '',
             data: []
         };
         this.inputHandler = this.inputHandler.bind(this);
     }
     inputHandler ({ target }) {
-        if (!target.value) {
+        let locationPromise = GetLocation(target);
+
+        if (!locationPromise) {
             this.setState({
                 data: []
             });
             return;
         }
-        axios.get('https://maps.google.com/maps/api/geocode/json?sensor=false&address=' + target.value)
-        .then((response) => {
+        locationPromise.then((response) => {
             this.setState({
                 data: response.data.results
             })
-        })
-    }
+        });
+    }        
     render () {
         return(
             <div className="main-wrap">
