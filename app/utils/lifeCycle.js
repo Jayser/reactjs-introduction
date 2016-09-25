@@ -24,11 +24,6 @@ export default {
         console.log('-> componentWillUnmount');
     },
 
-    shouldComponentUpdate: function () {
-        console.log('-> shouldComponentUpdate');
-        return true;
-    },
-
     componentWillUpdate: function () {
         console.log('-> componentWillUpdate');
     },

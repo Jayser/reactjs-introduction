@@ -38,12 +38,12 @@ const WeatherApp = createClass({
         }
     },
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate: function(nextProps, nextState) {
         const prevState = Immutable.fromJS(this.state);
-        const shouldUpdate = !Immutable.is(prevState, prevState.merge(nextState));
+        const isShouldUpdate = !Immutable.is(prevState, prevState.merge(nextState));
 
-        return shouldUpdate;
-    }
+        return isShouldUpdate;
+    },
 
     handlerWeathers: function(weathers) {
         // save to storage for pre-populate
