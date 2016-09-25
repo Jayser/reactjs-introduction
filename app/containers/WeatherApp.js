@@ -1,4 +1,5 @@
-import React, { createClass } from 'react';
+import React, {createClass} from 'react';
+import Immutable from 'Immutable';
 import store from 'store';
 
 import {getWeathers} from 'services/weatherService';
@@ -37,8 +38,15 @@ const WeatherApp = createClass({
         }
     },
 
+    shouldComponentUpdate(nextProps, nextState) {
+        const prevState = Immutable.fromJS(this.state);
+        const shouldUpdate = !Immutable.is(prevState, prevState.merge(nextState));
+
+        return shouldUpdate;
+    }
+
     handlerWeathers: function(weathers) {
-        // save to storage then pre-populate
+        // save to storage for pre-populate
         store.set(TYPE_WEATHER, weathers);
 
         this.setState({
