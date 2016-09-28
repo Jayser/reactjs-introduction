@@ -1,7 +1,7 @@
 import './index.scss';
 import {GetWeather} from '../actions/index.js';
 import React, {PropTypes} from 'react';
-import localStore from 'store'
+import localStore from 'store';
 
 class AutocompleteList extends React.Component {
     constructor (props) {
