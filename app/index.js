@@ -1,6 +1,6 @@
 import './assets/scss/main.scss';
 
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {render} from 'react-dom';
 
 import {GetLocation} from './components/actions/index.js'
@@ -14,10 +14,17 @@ class WeatherApp extends React.Component{
     constructor (props) {
         super(props);
         this.state = {
-            type: '',
-            data: []
+            type: this.checkType(),
+            data: [],
+            storedData: localStore.get('weatherItems') || []
         };
         this.inputHandler = this.inputHandler.bind(this);
+        this.updateWeatherItems = this.updateWeatherItems.bind(this);
+        this.setList = this.setList.bind(this);
+        this.checkType = this.checkType.bind(this);
+    }
+    checkType () {
+        return (localStore.get('weatherItems') || []).length ? 'Weather List' : 'Autocomplete List'
     }
     inputHandler ({ target }) {
         let locationPromise = GetLocation(target);
@@ -30,23 +37,31 @@ class WeatherApp extends React.Component{
         }
         locationPromise.then((response) => {
             this.setState({
-                data: response.data.results
+                data: response.data.results,
+                type: 'Autocomplete List'
             })
         });
-    }        
+    }
+    updateWeatherItems (data, listType) {
+        this.setState({
+            storedData: data,
+            type: listType
+        });
+    }
+    setList () {
+        return (this.state.type === 'Autocomplete List' ?
+            <AutocompleteList list={this.state.data} updateWeatherList={this.updateWeatherItems} className="search-list"/>:
+            <WeatherList list={this.state.storedData} className="weather-list"/>);
+    }
     render () {
         return(
             <div className="main-wrap">
                 <input id="autocomplete-input" className="controls" onInput={this.inputHandler} type="text" placeholder="Enter a location"/>
-                <AutocompleteList list={this.state.data} className="search-list"/>
-                <WeatherList list={this.props.weatherItems} className="weather-list"/>
+                <p>{this.state.type}</p>
+                {this.setList()}
             </div>
         );
     }
 }
 
-WeatherApp.propTypes = {
-    weatherItems: PropTypes.array.isRequired
-}
-
-render(<WeatherApp weatherItems={localStore.get('weatherItems') || []} />, document.getElementById('app'));
+render(<WeatherApp/>, document.getElementById('app'));

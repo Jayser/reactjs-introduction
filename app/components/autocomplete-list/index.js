@@ -30,12 +30,12 @@ class AutocompleteList extends React.Component {
         };
 
         store.push(item);
+        this.props.updateWeatherList(store, 'Weather List')
         localStore.set('weatherItems', store);
     }
     getWheather (lat, lng, name) {
         GetWeather(lat, lng)
         .then((json) => {
-            console.log(json);
             this.addItemToStore(json, name);
         })
         .catch((ex) => {
@@ -65,7 +65,8 @@ class AutocompleteList extends React.Component {
 }
 
 AutocompleteList.propTypes = {
-    list: PropTypes.array.isRequired
+    list: PropTypes.array.isRequired,
+    updateWeatherList: PropTypes.func
 }
 
 export default AutocompleteList;
