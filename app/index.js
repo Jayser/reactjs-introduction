@@ -9,22 +9,19 @@ import localStore from 'store'
 
 import AutocompleteList from './components/autocomplete-list/index.js';
 import WeatherList from './components/weather-list/index.js';
+import ListTitle from './components/title-list/index.js';
 
 class WeatherApp extends React.Component{
     constructor (props) {
         super(props);
         this.state = {
-            type: this.checkType(),
+            type: '',
             data: [],
             storedData: localStore.get('weatherItems') || []
         };
         this.inputHandler = this.inputHandler.bind(this);
         this.updateWeatherItems = this.updateWeatherItems.bind(this);
         this.setList = this.setList.bind(this);
-        this.checkType = this.checkType.bind(this);
-    }
-    checkType () {
-        return (localStore.get('weatherItems') || []).length ? 'Weather List' : 'Autocomplete List'
     }
     inputHandler ({ target }) {
         let locationPromise = GetLocation(target);
@@ -48,17 +45,23 @@ class WeatherApp extends React.Component{
             type: listType
         });
     }
-    setList () {
-        return (this.state.type === 'Autocomplete List' ?
-            <AutocompleteList list={this.state.data} updateWeatherList={this.updateWeatherItems} className="search-list"/>:
-            <WeatherList list={this.state.storedData} className="weather-list"/>);
+    getList () {
+        let list = '';
+
+        if (this.state.type === 'Autocomplete List') {
+            list = <AutocompleteList list={this.state.data} updateWeatherList={this.updateWeatherItems} className="search-list"/>
+        } else if (this.state.type === 'Wheather List') {
+            list = <WeatherList list={this.state.storedData} className="weather-list"/> 
+        }
+
+        return list;
     }
     render () {
         return(
             <div className="main-wrap">
                 <input id="autocomplete-input" className="controls" onInput={this.inputHandler} type="text" placeholder="Enter a location"/>
-                <p>{this.state.type}</p>
-                {this.setList()}
+                <ListTitle savedData={this.state.storedData}/>
+                {this.getList()}
             </div>
         );
     }
