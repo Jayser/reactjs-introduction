@@ -3,13 +3,12 @@ import React, {PropTypes} from 'react';
 class ListTitle extends React.Component {
     
     render () {
-        let text = this.props.storedData;
-        return(<p>{text}</p>)
+        return(<p>{this.props.children}</p>)
     }
 }
 
 ListTitle.propTypes = {
-    storedData: PropTypes.string
+    children: PropTypes.string
 }
 
 export default ListTitle;

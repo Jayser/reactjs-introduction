@@ -3,41 +3,51 @@ import './assets/scss/main.scss';
 import React from 'react';
 import {render} from 'react-dom';
 
-import {GetLocation} from './components/actions/index.js'
+import {GetLocation} from './services/index.js'
 import localStore from 'store'
 
+import {WEATHER_LIST, AUTOCOMPLETE_LIST, STORE_NAME} from './constants/index';
+import AutocompleteList from './components/autocomplete-list/index';
+import WeatherList from './components/weather-list/index';
+import ListTitle from './components/title-list/index';
 
-import AutocompleteList from './components/autocomplete-list/index.js';
-import WeatherList from './components/weather-list/index.js';
-import ListTitle from './components/title-list/index.js';
-
-class WeatherApp extends React.Component{
+class WeatherApp extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
             type: '',
             data: [],
-            storedData: localStore.get('weatherItems') || []
+            storedData: localStore.get(STORE_NAME) || []
         };
+
         this.inputHandler = this.inputHandler.bind(this);
         this.updateWeatherItems = this.updateWeatherItems.bind(this);
-        this.setList = this.setList.bind(this);
+        this.getList = this.getList.bind(this);
+        this.setResponceToState = this.setResponceToState.bind(this);
+    }
+    componentWillMount () {
+        if (this.state.storedData.length) {
+            this.setState({
+                type: WEATHER_LIST
+            });
+        }
+    }
+    setResponceToState (response) {
+        this.setState({
+            data: response.data.results,
+            type: AUTOCOMPLETE_LIST
+        })
     }
     inputHandler ({ target }) {
-        let locationPromise = GetLocation(target);
-
-        if (!locationPromise) {
+        if (!target.value) {
             this.setState({
-                data: []
+                data: [],
+                type: WEATHER_LIST
             });
             return;
         }
-        locationPromise.then((response) => {
-            this.setState({
-                data: response.data.results,
-                type: 'Autocomplete List'
-            })
-        });
+
+        GetLocation(target.value, this.setResponceToState)
     }
     updateWeatherItems (data, listType) {
         this.setState({
@@ -48,9 +58,9 @@ class WeatherApp extends React.Component{
     getList () {
         let list = '';
 
-        if (this.state.type === 'Autocomplete List') {
+        if (this.state.type === AUTOCOMPLETE_LIST) {
             list = <AutocompleteList list={this.state.data} updateWeatherList={this.updateWeatherItems} className="search-list"/>
-        } else if (this.state.type === 'Wheather List') {
+        } else if (this.state.type === WEATHER_LIST) {
             list = <WeatherList list={this.state.storedData} className="weather-list"/> 
         }
 
@@ -60,7 +70,9 @@ class WeatherApp extends React.Component{
         return(
             <div className="main-wrap">
                 <input id="autocomplete-input" className="controls" onInput={this.inputHandler} type="text" placeholder="Enter a location"/>
-                <ListTitle savedData={this.state.storedData}/>
+                <ListTitle>
+                    {this.state.type}
+                </ListTitle>
                 {this.getList()}
             </div>
         );

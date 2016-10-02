@@ -1,0 +1,19 @@
+
+.weather-list {
+    margin: 0px;
+    padding: 0px;
+    li {
+        list-style-type: none;
+        margin: 0px 0px 2px 0;
+        span {
+            height:30px;
+            border-bottom: solid 1px #000;
+            background: #eee;
+        }
+        .item-temperature {
+            margin-left: 5px;
+            color: #008000;
+            background: #fff;
+        }
+    }
+}

@@ -1,7 +1,9 @@
 import './index.scss';
-import {GetWeather} from '../actions/index.js';
+import {GetWeather} from '../../services/index.js';
 import React, {PropTypes} from 'react';
 import localStore from 'store';
+
+import {WEATHER_LIST, STORE_NAME} from '../../constants/index.js';
 
 class AutocompleteList extends React.Component {
     constructor (props) {
@@ -23,24 +25,18 @@ class AutocompleteList extends React.Component {
         return el;
     }
     addItemToStore (data, name) {
-        let store = localStore.get('weatherItems') || [];
+        let store = localStore.get(STORE_NAME) || [];
         let item = {
             temperature: data.currently.temperature,
             name: name
         };
 
         store.push(item);
-        this.props.updateWeatherList(store, 'Weather List')
-        localStore.set('weatherItems', store);
+        this.props.updateWeatherList(store, WEATHER_LIST)
+        localStore.set(STORE_NAME, store);
     }
     getWheather (lat, lng, name) {
-        GetWeather(lat, lng)
-        .then((json) => {
-            this.addItemToStore(json, name);
-        })
-        .catch((ex) => {
-            console.log('error', ex);
-        });
+        GetWeather(lat, lng, name, this.addItemToStore);
     }
     clickHandler ({target}) {
         let itemWrap = this.closest(target, '.list-item-wrap');
