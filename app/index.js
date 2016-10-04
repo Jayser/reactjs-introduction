@@ -9,7 +9,8 @@ import localStore from 'store'
 import {WEATHER_LIST, AUTOCOMPLETE_LIST, STORE_NAME} from './constants/index';
 import AutocompleteList from './components/autocomplete-list/index';
 import WeatherList from './components/weather-list/index';
-import ListTitle from './components/title-list/index';
+import ListTitle from './components/list-title/index';
+import AutocompleteInput from './components/autocomplete-input/index';
 
 class WeatherApp extends React.Component {
     constructor (props) {
@@ -69,7 +70,7 @@ class WeatherApp extends React.Component {
     render () {
         return(
             <div className="main-wrap">
-                <input id="autocomplete-input" className="controls" onInput={this.inputHandler} type="text" placeholder="Enter a location"/>
+                <AutocompleteInput setHandlerOnChange={this.inputHandler}/> 
                 <ListTitle>
                     {this.state.type}
                 </ListTitle>
