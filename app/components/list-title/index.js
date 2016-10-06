@@ -8,7 +8,7 @@ class ListTitle extends React.Component {
 }
 
 ListTitle.propTypes = {
-    children: PropTypes.string
+    children: PropTypes.node
 }
 
 export default ListTitle;

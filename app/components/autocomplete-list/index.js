@@ -32,7 +32,8 @@ class AutocompleteList extends React.Component {
         };
 
         store.push(item);
-        this.props.updateWeatherList(store, WEATHER_LIST)
+        this.props.updateWeatherList(store, WEATHER_LIST);
+        this.props.clearInputValue();
         localStore.set(STORE_NAME, store);
     }
     getWheather (lat, lng, name) {
@@ -62,6 +63,7 @@ class AutocompleteList extends React.Component {
 
 AutocompleteList.propTypes = {
     list: PropTypes.array.isRequired,
+    clearInputValue: PropTypes.func,
     updateWeatherList: PropTypes.func
 }
 

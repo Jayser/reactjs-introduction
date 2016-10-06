@@ -18,13 +18,15 @@ class WeatherApp extends React.Component {
         this.state = {
             type: '',
             data: [],
-            storedData: localStore.get(STORE_NAME) || []
+            storedData: localStore.get(STORE_NAME) || [],
+            inputValue: ''
         };
 
         this.inputHandler = this.inputHandler.bind(this);
         this.updateWeatherItems = this.updateWeatherItems.bind(this);
         this.getList = this.getList.bind(this);
         this.setResponceToState = this.setResponceToState.bind(this);
+        this.clearInput = this.clearInput.bind(this);
     }
     componentWillMount () {
         if (this.state.storedData.length) {
@@ -40,6 +42,9 @@ class WeatherApp extends React.Component {
         })
     }
     inputHandler ({ target }) {
+        this.setState({
+            inputValue: target.value
+        });
         if (!target.value) {
             this.setState({
                 data: [],
@@ -47,8 +52,12 @@ class WeatherApp extends React.Component {
             });
             return;
         }
-
         GetLocation(target.value, this.setResponceToState)
+    }
+    clearInput () {
+        this.setState({
+            inputValue: ''
+        });
     }
     updateWeatherItems (data, listType) {
         this.setState({
@@ -60,9 +69,13 @@ class WeatherApp extends React.Component {
         let list = '';
 
         if (this.state.type === AUTOCOMPLETE_LIST) {
-            list = <AutocompleteList list={this.state.data} updateWeatherList={this.updateWeatherItems} className="search-list"/>
+            list = <AutocompleteList list={this.state.data}
+                    updateWeatherList={this.updateWeatherItems}
+                    clearInputValue={this.clearInput}
+                    className="search-list"/>
         } else if (this.state.type === WEATHER_LIST) {
-            list = <WeatherList list={this.state.storedData} className="weather-list"/> 
+            list = <WeatherList list={this.state.storedData}
+                    className="weather-list"/> 
         }
 
         return list;
@@ -70,7 +83,7 @@ class WeatherApp extends React.Component {
     render () {
         return(
             <div className="main-wrap">
-                <AutocompleteInput setHandlerOnChange={this.inputHandler}/> 
+                <AutocompleteInput setHandlerOnChange={this.inputHandler} inputVal={this.state.inputValue}/>
                 <ListTitle>
                     {this.state.type}
                 </ListTitle>
