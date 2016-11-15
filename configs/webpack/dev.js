@@ -1,5 +1,4 @@
 const Webpack = require('webpack');
-const WebpackWriteFilePlugin = require('write-file-webpack-plugin');
 const cfgBase = require('../base');
 
 module.exports = {
@@ -16,27 +15,35 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'eslint',
-                include: [cfgBase.path.source]
+                include: [cfgBase.paths.source]
             }
         ],
         loaders: [
             {
                 test: /\.js$/,
-                include: [cfgBase.path.source],
-                loaders: ['react-hot', 'babel?extends=' + cfgBase.path.babel]
+                include: [cfgBase.paths.source],
+                loaders: ['react-hot', 'babel?extends=' + cfgBase.paths.babel]
             },
             {
                 test: /\.scss/,
-                include: [cfgBase.path.source],
+                include: [cfgBase.paths.source],
                 loaders: ['style', 'css?sourceMap', 'sass?sourceMap']
             },
             {
+                test: /\.css/,
+                loaders: ['style', 'css?sourceMap']
+            },
+            {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'url?limit=10000&mimetype=application/font-woff&name=' + cfgBase.path.fonts + '/[name].[ext]?[hash]'
+                loader: 'url?limit=10000&mimetype=application/font-woff&name=' + cfgBase.paths.fonts + '/[name].[ext]?[hash]'
+            },
+            {
+                test: /\.(jpe?g|png|gif|svg)$/,
+                loader: 'url?&limit=10000&name=' + cfgBase.paths.img + '/[name].[ext]?[hash]'
             },
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'file?name=' + cfgBase.path.fonts + '/[name].[ext]?[hash]'
+                loader: 'file?name=' + cfgBase.paths.fonts + '/[name].[ext]?[hash]'
             }
         ]
     },
